@@ -1,27 +1,94 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "home",
+    component: () => import("@/views/Home.vue"),
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    }
-  }
-]
+    path: "/profile",
+    children: [
+      {
+        path: "edit",
+        component: () => import("@/views/profile/edit.vue"),
+      },
+      {
+        path: "settings",
+        component: () => import("@/views/profile/settings.vue"),
+      },
+      {
+        path: "privacy-and-security",
+        component: () => import("@/views/profile/privacy-and-security.vue"),
+      },
+      {
+        path: "log-out",
+        component: () => import("@/views/profile/log-out.vue"),
+      },
+    ],
+  },
+  {
+    path: "/auths",
+    children: [
+      {
+        path: "tables-group",
+        children: [
+          {
+            path: "list",
+            component: () => import("@/views/auths/tables-group/list.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/views/auths/tables-group/create.vue"),
+          },
+        ],
+      },
+      {
+        path: "authority-groups",
+        children: [
+          {
+            path: "list",
+            component: () => import("@/views/auths/authority-groups/list.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/views/auths/authority-groups/create.vue"),
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/tables",
+    children: [
+      {
+        path: "list",
+        component: () => import("@/views/tables/list.vue"),
+      },
+      {
+        path: "create",
+        component: () => import("@/views/tables/create.vue"),
+      },
+    ],
+  },
+  {
+    path: "/users",
+    children: [
+      {
+        path: "list",
+        component: () => import("@/views/users/list.vue"),
+      },
+      {
+        path: "create",
+        component: () => import("@/views/users/create.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
