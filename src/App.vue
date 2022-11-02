@@ -45,7 +45,7 @@ import RightSide from "@/layout/right-side";
 export default {
   data() {
     return {
-      menu_state: true,
+      menu_state: false,
       nots_state: false,
     };
   },
@@ -69,6 +69,36 @@ export default {
         }
       });
     });
+  },
+  mounted() {
+    setInterval(() => {
+      this.$services.list("nots").then((res) => {
+        for (const data of Object.values(res.data.data)) {
+          if (new Date(data.reminder).getTime() > new Date().getTime()) {
+            this.notifyMe();
+          }
+        }
+      });
+    }, 10000);
+  },
+  methods: {
+    notifyMe() {
+      if (!Notification) {
+        alert("Lütfen Chrome, Firefox, Opera, Internet Explorer veya Spartan'ın güncel bir versiyonunu kullanınız...");
+        return;
+      }
+
+      if (Notification.permission !== "granted") Notification.requestPermission();
+
+      var notification = new Notification("Hoşgeldiniz!", {
+        icon: "http://www.karayeltasarim.com/Resim/Upload/miniworld635620976047761956.png",
+        body: "Bizimle iletişime geçmek için tıklayın!",
+      });
+
+      notification.onclick = function () {
+        window.open("http://www.karayeltasarim.com/tr/iletisim.html");
+      };
+    },
   },
   components: {
     Aside,

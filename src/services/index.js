@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ElNotification } from "element-plus";
 
-const base = "http://192.168.1.50:8888/api/";
+const base = "http://localhost:8888/api/";
 const token = 0; //localStorage.getItem("token");
 const list = async (table_name, params) => {
   return await axios({
