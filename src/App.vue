@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container position-relative" style="height: 100vh">
+  <el-container :class="getSettings.container" class="position-relative" style="height: 100vh">
     <div class="position-absolute d-flex justify-content-center text-center" style="top: 60px">
       <el-button plain @click="(menu_state = !menu_state), (nots_state = false)"
         >Menu <i class="ms-2 bi bi-menu-button-wide"></i>
@@ -20,7 +20,7 @@
       </el-aside>
       <el-main class="px-0">
         <el-scrollbar class="px-0">
-          <div class="container mb-5">
+          <div :class="getSettings.container" class="mb-5">
             <router-view></router-view>
           </div>
         </el-scrollbar>
@@ -35,6 +35,7 @@
       </el-aside>
     </el-container>
   </el-container>
+  <Script />
 </template>
 
 <script>
@@ -42,12 +43,17 @@ import Aside from "@/layout/aside";
 import Header from "@/layout/header";
 import Footer from "@/layout/footer";
 import RightSide from "@/layout/right-side";
+import Script from "@/views/Script.vue";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       menu_state: false,
       nots_state: false,
     };
+  },
+  computed: {
+    ...mapGetters(["getSettings"]),
   },
   created() {
     document.addEventListener("click", (e) => {
@@ -105,6 +111,7 @@ export default {
     Header,
     Footer,
     RightSide,
+    Script,
   },
 };
 </script>

@@ -41,7 +41,27 @@ const create = async (table_name) => {
   });
 };
 
+const update = async (table_name, id, params) => {
+  return await axios({
+    method: "patch",
+    url: base + "/tables/" + table_name + "/" + id + "/update",
+    data: params,
+    headers: {
+      token: token,
+    },
+  }).catch((res) => {
+    if (res.response.status == 401) {
+      ElNotification({
+        title: "Error",
+        message: "Unauthorized",
+        type: "error",
+      });
+    }
+  });
+};
+
 export default {
   list,
   create,
+  update,
 };

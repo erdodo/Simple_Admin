@@ -84,6 +84,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/settings",
+
+    component: () => import("@/views/settings/index.vue"),
+  },
 ];
 
 const router = createRouter({

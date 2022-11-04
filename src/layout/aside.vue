@@ -53,6 +53,7 @@
           ><i class="bi bi-box-arrow-left me-2"></i>Log Out</el-menu-item
         >
       </el-sub-menu>
+      <el-menu-item index="/settings"><i class="bi bi-gear me-2"></i>Settings</el-menu-item>
     </el-menu>
   </el-card>
 </template>
