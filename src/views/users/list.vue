@@ -24,10 +24,9 @@
       </template>
     </el-table-column>
 
-    <el-table-column fixed="right" label="Operations" width="120">
+    <el-table-column fixed="right" label="Operations" width="100">
       <template #default="scope">
-        <el-button link type="primary" size="small" @click="handleClick(scope.row)">Detail</el-button>
-        <el-button link type="primary" size="small">Edit</el-button>
+        <Table-Right :data="scope.row"></Table-Right>
       </template>
     </el-table-column>
   </el-table>
@@ -35,6 +34,7 @@
 
 <script>
 import services from "@/services";
+import TableRight from "@/components/Table-Right";
 export default {
   data() {
     return {
@@ -45,6 +45,9 @@ export default {
     services.list("users").then((res) => {
       this.datas = res.data;
     });
+  },
+  components: {
+    TableRight,
   },
 };
 </script>
