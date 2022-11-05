@@ -3,10 +3,12 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/auths/' }">Auths</el-breadcrumb-item>
-      <el-breadcrumb-item>Tables Group</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/auths/tables-group/list' }">Tables Group</el-breadcrumb-item>
+      <el-breadcrumb-item>Tables</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-button plain type="info" @click="$router.push('/auths/tables-group/create')">Add</el-button>
+    <el-button plain type="info" @click="$router.push('/auths/tables-group/tables/create')">Add</el-button>
   </div>
+
   <hr />
   <el-table :data="datas.data" style="width: 100%">
     <el-table-column v-for="column in datas.columns" :key="column.name" :prop="column.name" min-width="250px" width="auto">
@@ -28,23 +30,24 @@
       </template>
     </el-table-column>
 
-    <el-table-column fixed="right" label="Operations" width="110">
+    <el-table-column fixed="right" label="Operations" width="100">
       <template #default="scope">
         <div class="d-flex justify-content-center w-100">
-          <el-button class="me-1" v-tooltip="'Tables'" @click="$router.push('/auths/tables-group/tables/list')"
-            ><i class="bi bi-file-earmark-spreadsheet fs-6"></i
-          ></el-button>
           <el-dropdown trigger="click">
             <el-button><i class="bi bi-pencil fs-6"></i></el-button>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>
-                  <router-link class="text-decoration-none text-primary" :to="'/auths/tables-group/detail/' + scope.row.id"
+                  <router-link
+                    class="text-decoration-none text-primary"
+                    :to="'/auths/tables-group/tables/detail/' + scope.row.id"
                     >Detail</router-link
                   >
                 </el-dropdown-item>
                 <el-dropdown-item>
-                  <router-link class="text-decoration-none text-success" :to="'/auths/tables-group/edit/' + scope.row.id"
+                  <router-link
+                    class="text-decoration-none text-success"
+                    :to="'/auths/tables-group/tables/edit/' + scope.row.id"
                     >Edit</router-link
                   >
                 </el-dropdown-item>
@@ -72,7 +75,7 @@ export default {
   },
   methods: {
     getData() {
-      services.list("table_group").then((res) => {
+      services.list("tables").then((res) => {
         this.datas = res.data;
       });
     },
@@ -81,7 +84,7 @@ export default {
         confirmButtonText: "OK",
         callback: (action) => {
           if (action == "confirm") {
-            services.del("table_group", id).then(() => {
+            services.del("tables", id).then(() => {
               ElNotification({
                 title: "Success",
                 message: "Deleted",

@@ -1,4 +1,13 @@
 <template>
+  <el-breadcrumb separator="/">
+    <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/auths/' }">Auths</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/auths/tables-group/list' }">Tables Group</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/auths/tables-group/tables/list' }">Tables</el-breadcrumb-item>
+    <el-breadcrumb-item>Edit</el-breadcrumb-item>
+  </el-breadcrumb>
+
+  <hr />
   <div class="row justify-content-center">
     <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
       <Inputs v-for="column in columns" :key="column" :column="column" v-model="data[column.name]"></Inputs>
@@ -23,20 +32,20 @@ export default {
     };
   },
   mounted() {
-    services.edit("users", "1").then((res) => {
+    services.edit("tables", this.$route.params.id).then((res) => {
       this.columns = res.data.columns;
       this.data = res.data.data;
     });
   },
   methods: {
     save() {
-      services.update("users", this.data.id, this.data).then(() => {
+      services.update("tables", this.data.id, this.data).then(() => {
         ElNotification({
           title: "Success",
           message: "Updated",
           type: "success",
         });
-        this.$router.push("/users/list");
+        this.$router.push("/tables/list");
       });
     },
   },

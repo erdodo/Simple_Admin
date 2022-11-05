@@ -13,6 +13,7 @@ import "floating-vue/dist/style.css";
 
 const app = createApp(App);
 app.config.globalProperties.$image_base = "http://localhost:8888/uploads/";
+app.config.globalProperties.$upload_base = "http://localhost:8888/api/file-upload/";
 app.config.globalProperties.$services = services;
 app.use(store);
 app.use(router);

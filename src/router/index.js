@@ -41,6 +41,35 @@ const routes = [
             path: "create",
             component: () => import("@/views/auths/tables-group/create.vue"),
           },
+          {
+            path: "edit/:id",
+            component: () => import("@/views/auths/tables-group/edit.vue"),
+          },
+          {
+            path: "detail/:id",
+            component: () => import("@/views/auths/tables-group/detail.vue"),
+          },
+          {
+            path: "tables",
+            children: [
+              {
+                path: "list",
+                component: () => import("@/views/auths/tables-group/tables/list.vue"),
+              },
+              {
+                path: "create",
+                component: () => import("@/views/auths/tables-group/tables/create.vue"),
+              },
+              {
+                path: "edit/:id",
+                component: () => import("@/views/auths/tables-group/tables/edit.vue"),
+              },
+              {
+                path: "detail/:id",
+                component: () => import("@/views/auths/tables-group/tables/detail.vue"),
+              },
+            ],
+          },
         ],
       },
       {
@@ -81,6 +110,14 @@ const routes = [
       {
         path: "create",
         component: () => import("@/views/users/create.vue"),
+      },
+      {
+        path: "edit/:id",
+        component: () => import("@/views/users/edit.vue"),
+      },
+      {
+        path: "detail/:id",
+        component: () => import("@/views/users/detail.vue"),
       },
     ],
   },

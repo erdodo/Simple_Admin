@@ -1,40 +1,43 @@
 <template>
-  <el-container :class="getSettings.container" class="position-relative" style="height: 100vh">
-    <div class="position-absolute d-flex justify-content-center text-center" style="top: 60px">
-      <el-button plain @click="(menu_state = !menu_state), (nots_state = false)"
-        >Menu <i class="ms-2 bi bi-menu-button-wide"></i>
-      </el-button>
-    </div>
-    <div class="position-absolute d-flex justify-content-center text-center" style="top: 60px; right: 12px">
-      <el-button plain @click="(nots_state = !nots_state), (menu_state = false)"
-        >Nots <i class="ms-2 bi bi-view-list"></i>
-      </el-button>
-    </div>
-    <el-header>
-      <Header></Header>
-    </el-header>
+  <el-scrollbar>
+    <el-container :class="getSettings.container" class="position-relative" style="min-height: 100vh">
+      <div class="position-absolute d-flex justify-content-center text-center" style="top: 60px">
+        <el-button plain @click="(menu_state = !menu_state), (nots_state = false)"
+          >Menu <i class="ms-2 bi bi-menu-button-wide"></i>
+        </el-button>
+      </div>
+      <div class="position-absolute d-flex justify-content-center text-center" style="top: 60px; right: 12px">
+        <el-button plain @click="(nots_state = !nots_state), (menu_state = false)"
+          >Nots <i class="ms-2 bi bi-view-list"></i>
+        </el-button>
+      </div>
+      <el-header>
+        <Header></Header>
+      </el-header>
 
-    <el-container style="height: 100vh" class="mt-5">
-      <el-aside v-if="menu_state" width="260px" style="z-index: 4" class="mt-2 position-absolute">
-        <el-scrollbar class="h-100"><Aside></Aside> </el-scrollbar>
-      </el-aside>
-      <el-main class="px-0">
-        <el-scrollbar class="px-0">
-          <div :class="getSettings.container" class="mb-5">
-            <router-view></router-view>
-          </div>
-        </el-scrollbar>
-      </el-main>
-      <el-aside
-        v-if="nots_state"
-        width="430px"
-        style="z-index: 4; right: 12px; max-width: 90vw"
-        class="mt-2 position-absolute"
-      >
-        <el-scrollbar class="h-100"><RightSide></RightSide> </el-scrollbar>
-      </el-aside>
+      <el-container class="mt-5">
+        <el-aside v-if="menu_state" width="260px" style="z-index: 4" class="mt-2 position-absolute">
+          <el-scrollbar class="h-100"><Aside></Aside> </el-scrollbar>
+        </el-aside>
+        <el-main class="px-0">
+          <el-scrollbar class="px-0">
+            <div :class="getSettings.container" class="">
+              <router-view></router-view>
+            </div>
+          </el-scrollbar>
+        </el-main>
+        <el-aside
+          v-if="nots_state"
+          width="430px"
+          style="z-index: 4; right: 12px; max-width: 90vw"
+          class="mt-2 position-absolute"
+        >
+          <el-scrollbar class="h-100"><RightSide></RightSide> </el-scrollbar>
+        </el-aside>
+      </el-container>
+      <el-footer> <Footer></Footer> </el-footer>
     </el-container>
-  </el-container>
+  </el-scrollbar>
   <Script />
 </template>
 
