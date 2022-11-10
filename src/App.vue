@@ -79,17 +79,8 @@ export default {
       });
     });
   },
-  mounted() {
-    setInterval(() => {
-      this.$services.list("nots").then((res) => {
-        for (const data of Object.values(res.data.data)) {
-          if (new Date(data.reminder).getTime() > new Date().getTime()) {
-            this.notifyMe();
-          }
-        }
-      });
-    }, 10000);
-  },
+
+  mounted() {},
   methods: {
     notifyMe() {
       if (!Notification) {
@@ -123,8 +114,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  color: #2c3e50;
 }
 
 nav {

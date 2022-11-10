@@ -1,7 +1,11 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/users/list' }">Users</el-breadcrumb-item>
+
+    <el-breadcrumb-item :to="{ path: '/tables/list' }">Tables</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/tables/datas/' + this.$route.params.table_name + '/list' }">{{
+      this.$route.params.table_name
+    }}</el-breadcrumb-item>
     <el-breadcrumb-item>Edit</el-breadcrumb-item>
   </el-breadcrumb>
 
@@ -30,20 +34,20 @@ export default {
     };
   },
   mounted() {
-    services.edit("users", this.$route.params.id).then((res) => {
+    services.edit(this.$route.params.table_name, this.$route.params.id).then((res) => {
       this.columns = res.data.columns;
       this.data = res.data.data;
     });
   },
   methods: {
     save() {
-      services.update("users", this.$route.params.id, this.data).then(() => {
+      services.update(this.$route.params.table_name, this.data.id, this.data).then(() => {
         ElNotification({
           title: "Success",
           message: "Updated",
           type: "success",
         });
-        this.$router.push("/users/list");
+        this.$router.push("/tables/datas/" + this.$route.params.table_name + "/list");
       });
     },
   },

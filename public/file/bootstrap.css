@@ -33,8 +33,7 @@
     --bs-info: var(--bs-cyan);
     --bs-warning: var(--bs-yellow);
     --bs-danger: var(--bs-red);
-    --bs-light: #fefeff;
-    --bs-dark: #212529;
+    
     --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
@@ -42,10 +41,14 @@
 .light{
     color-scheme: light;
     --bs-white:rgb(255, 255, 255);
+    --bs-light: #fefeff;
+    --bs-dark: #212529;
 }
 .dark{
     color-scheme: dark;
     --bs-white:rgb(19, 19, 21);
+    --bs-light: #16161d;
+    --bs-dark: #8fb2d2;
 }
 .light body{
     background-color: var(--bs-light);
@@ -91,7 +94,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
@@ -326,7 +329,7 @@ kbd {
     padding: .2rem .4rem;
     font-size: .875em;
     color: var(--bs-white);
-    background-color: #212529;
+    background-color: var(--bs-dark);
     border-radius: .2rem
 }
 
@@ -2045,15 +2048,15 @@ progress {
 .table {
     --bs-table-bg: transparent;
     --bs-table-accent-bg: transparent;
-    --bs-table-striped-color: #212529;
+    --bs-table-striped-color: var(--bs-dark);
     --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-    --bs-table-active-color: #212529;
+    --bs-table-active-color: var(--bs-dark);
     --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-    --bs-table-hover-color: #212529;
+    --bs-table-hover-color: var(--bs-dark);
     --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
     width: 100%;
     margin-bottom: 1rem;
-    color: #212529;
+    color: var(--bs-dark);
     vertical-align: top;
     border-color: #dee2e6
 }
@@ -2197,7 +2200,7 @@ progress {
 }
 
 .table-dark {
-    --bs-table-bg: #212529;
+    --bs-table-bg: var(--bs-dark);
     --bs-table-striped-bg: #2c3034;
     --bs-table-striped-color: var(--bs-white);
     --bs-table-active-bg: #373b3e;
@@ -2285,7 +2288,7 @@ progress {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     background-color: var(--bs-white);
     background-clip: padding-box;
     border: 1px solid var(--el-border-color);
@@ -2338,7 +2341,7 @@ input[type=file]::file-selector-button {
 }
 
 .form-control:focus {
-    color: #212529;
+    color: var(--bs-dark);
     background-color: var(--bs-white);
     border-color: #86b7fe;
     outline: 0;
@@ -2370,7 +2373,7 @@ input[type=file]::file-selector-button {
     margin: -.375rem -.75rem;
     -webkit-margin-end: .75rem;
     margin-inline-end: .75rem;
-    color: #212529;
+    color: var(--bs-dark);
     background-color: #e9ecef;
     pointer-events: none;
     border-color: inherit;
@@ -2396,7 +2399,7 @@ input[type=file]::file-selector-button {
     margin: -.375rem -.75rem;
     -webkit-margin-end: .75rem;
     margin-inline-end: .75rem;
-    color: #212529;
+    color: var(--bs-dark);
     background-color: #e9ecef;
     pointer-events: none;
     border-color: inherit;
@@ -2425,7 +2428,7 @@ input[type=file]::file-selector-button {
     padding: .375rem 0;
     margin-bottom: 0;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     background-color: transparent;
     border: solid transparent;
     border-width: 1px 0
@@ -2519,7 +2522,7 @@ textarea.form-control-lg {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     background-color: var(--bs-white);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
@@ -2557,7 +2560,7 @@ textarea.form-control-lg {
 
 .form-select:-moz-focusring {
     color: transparent;
-    text-shadow: 0 0 0 #212529
+    text-shadow: 0 0 0 var(--bs-dark)
 }
 
 .form-select-sm {
@@ -2917,7 +2920,7 @@ textarea.form-control-lg {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     text-align: center;
     white-space: nowrap;
     background-color: #e9ecef;
@@ -3190,7 +3193,7 @@ textarea.form-control.is-invalid {
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: var(--bs-dark);
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -3213,7 +3216,7 @@ textarea.form-control.is-invalid {
 }
 
 .btn:hover {
-    color: #212529
+    color: var(--bs-dark)
 }
 
 .btn-check:focus+.btn,
@@ -3546,8 +3549,8 @@ fieldset:disabled .btn {
 
 .btn-dark {
     color: var(--bs-white);
-    background-color: #212529;
-    border-color: #212529
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark)
 }
 
 .btn-dark:hover {
@@ -3585,8 +3588,8 @@ fieldset:disabled .btn {
 .btn-dark.disabled,
 .btn-dark:disabled {
     color: var(--bs-white);
-    background-color: #212529;
-    border-color: #212529
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark)
 }
 
 .btn-outline-primary {
@@ -3870,14 +3873,14 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-dark {
-    color: #212529;
-    border-color: #212529
+    color: var(--bs-dark);
+    border-color: var(--bs-dark)
 }
 
 .btn-outline-dark:hover {
     color: var(--bs-white);
-    background-color: #212529;
-    border-color: #212529
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark)
 }
 
 .btn-check:focus+.btn-outline-dark,
@@ -3891,8 +3894,8 @@ fieldset:disabled .btn {
 .btn-outline-dark.dropdown-toggle.show,
 .btn-outline-dark:active {
     color: var(--bs-white);
-    background-color: #212529;
-    border-color: #212529
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark)
 }
 
 .btn-check:active+.btn-outline-dark:focus,
@@ -3905,7 +3908,7 @@ fieldset:disabled .btn {
 
 .btn-outline-dark.disabled,
 .btn-outline-dark:disabled {
-    color: #212529;
+    color: var(--bs-dark);
     background-color: transparent
 }
 
@@ -4002,7 +4005,7 @@ fieldset:disabled .btn {
     padding: .5rem 0;
     margin: 0;
     font-size: 1rem;
-    color: #212529;
+    color: var(--bs-dark);
     text-align: left;
     list-style: none;
     background-color: var(--bs-white);
@@ -4234,7 +4237,7 @@ fieldset:disabled .btn {
     padding: .25rem 1rem;
     clear: both;
     font-weight: 400;
-    color: #212529;
+    color: var(--bs-dark);
     text-align: inherit;
     text-decoration: none;
     white-space: nowrap;
@@ -4278,7 +4281,7 @@ fieldset:disabled .btn {
 .dropdown-item-text {
     display: block;
     padding: .25rem 1rem;
-    color: #212529
+    color: var(--bs-dark)
 }
 
 .dropdown-menu-dark {
@@ -5112,7 +5115,7 @@ fieldset:disabled .btn {
     width: 100%;
     padding: 1rem 1.25rem;
     font-size: 1rem;
-    color: #212529;
+    color: var(--bs-dark);
     text-align: left;
     background-color: var(--bs-white);
     border: 0;
@@ -5572,7 +5575,7 @@ fieldset:disabled .btn {
 }
 
 .list-group-item-action:active {
-    color: #212529;
+    color: var(--bs-dark);
     background-color: #e9ecef
 }
 
@@ -5580,7 +5583,7 @@ fieldset:disabled .btn {
     position: relative;
     display: block;
     padding: .5rem 1rem;
-    color: #212529;
+    color: var(--bs-dark);
     text-decoration: none;
     background-color: var(--bs-white);
     border: 1px solid rgba(0, 0, 0, .125)
@@ -6637,7 +6640,7 @@ fieldset:disabled .btn {
 
 .popover-body {
     padding: 1rem 1rem;
-    color: #212529
+    color: var(--bs-dark)
 }
 
 .carousel {
@@ -7084,7 +7087,7 @@ fieldset:disabled .btn {
 }
 
 .link-dark {
-    color: #212529
+    color: var(--bs-dark)
 }
 
 .link-dark:focus,
@@ -7482,7 +7485,7 @@ fieldset:disabled .btn {
 }
 
 .border-dark {
-    border-color: #212529 !important
+    border-color: var(--bs-dark) !important
 }
 
 .border-white {
@@ -8321,7 +8324,7 @@ fieldset:disabled .btn {
 }
 
 .text-dark {
-    color: #212529 !important
+    color: var(--bs-dark) !important
 }
 
 .text-white {
@@ -8329,7 +8332,7 @@ fieldset:disabled .btn {
 }
 
 .text-body {
-    color: #212529 !important
+    color: var(--bs-dark) !important
 }
 
 .text-muted {
@@ -8377,7 +8380,7 @@ fieldset:disabled .btn {
 }
 
 .bg-dark {
-    background-color: #212529 !important
+    background-color: var(--bs-dark) !important
 }
 
 .bg-body {

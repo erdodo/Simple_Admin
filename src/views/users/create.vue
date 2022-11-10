@@ -9,10 +9,8 @@
   <div class="row justify-content-center">
     <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
       <Inputs v-for="column in columns" :key="column" :column="column" v-model="data[column.name]"></Inputs>
-    </div>
-    <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
       <div class="d-flex justify-content-end">
-        <el-button type="primary" plain @click="save()">Save</el-button>
+        <el-button class="my-3" type="primary" plain @click="save()">Save</el-button>
       </div>
     </div>
   </div>
@@ -36,6 +34,7 @@ export default {
   },
   methods: {
     save() {
+      console.log(this.data);
       services.store("users", this.data).then(() => {
         ElNotification({
           title: "Success",
@@ -46,6 +45,7 @@ export default {
       });
     },
   },
+  watch: {},
   components: {
     Inputs,
   },

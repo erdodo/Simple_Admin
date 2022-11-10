@@ -83,6 +83,35 @@ const routes = [
             path: "create",
             component: () => import("@/views/auths/authority-groups/create.vue"),
           },
+          {
+            path: "edit/:id",
+            component: () => import("@/views/auths/authority-groups/edit.vue"),
+          },
+          {
+            path: "detail/:id",
+            component: () => import("@/views/auths/authority-groups/detail.vue"),
+          },
+          {
+            path: "auths/:auths_id/",
+            children: [
+              {
+                path: "list",
+                component: () => import("@/views/auths/authority-groups/auths/list.vue"),
+              },
+              {
+                path: "create",
+                component: () => import("@/views/auths/authority-groups/auths/create.vue"),
+              },
+              {
+                path: "edit/:id",
+                component: () => import("@/views/auths/authority-groups/auths/edit.vue"),
+              },
+              {
+                path: "detail/:id",
+                component: () => import("@/views/auths/authority-groups/auths/detail.vue"),
+              },
+            ],
+          },
         ],
       },
     ],
@@ -97,6 +126,56 @@ const routes = [
       {
         path: "create",
         component: () => import("@/views/tables/create.vue"),
+      },
+      {
+        path: "edit/:id",
+        component: () => import("@/views/tables/edit.vue"),
+      },
+      {
+        path: "detail/:id",
+        component: () => import("@/views/tables/detail.vue"),
+      },
+      {
+        path: "datas/:table_name",
+        children: [
+          {
+            path: "list",
+            component: () => import("@/views/tables/datas/list.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/views/tables/datas/create.vue"),
+          },
+          {
+            path: "edit/:id",
+            component: () => import("@/views/tables/datas/edit.vue"),
+          },
+          {
+            path: "detail/:id",
+            component: () => import("@/views/tables/datas/detail.vue"),
+          },
+        ],
+      },
+      {
+        path: "columns/:table_name",
+        children: [
+          {
+            path: "list",
+            component: () => import("@/views/tables/columns/list.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/views/tables/columns/create.vue"),
+          },
+          {
+            path: "edit/:id",
+            component: () => import("@/views/tables/columns/edit.vue"),
+          },
+          {
+            path: "detail/:id",
+            component: () => import("@/views/tables/columns/detail.vue"),
+          },
+        ],
       },
     ],
   },

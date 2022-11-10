@@ -134,6 +134,70 @@ const del = async (table_name, id) => {
     }
   });
 };
+const getAuths = async (table_name, auths_group_id) => {
+  return await axios({
+    method: "get",
+    url: base + "/get-auths/" + table_name + "/" + auths_group_id,
+
+    headers: {
+      token: token,
+    },
+  }).catch((res) => {
+    if (res.response.status == 500) {
+      ElNotification({
+        title: "Error",
+        message: "Error",
+        type: "error",
+      });
+    }
+    if (res.response.status == 401) {
+      ElNotification({
+        title: "Error",
+        message: "Unauthorized",
+        type: "error",
+      });
+    }
+  });
+};
+
+const addColumn = async (table_name, fields) => {
+  console.log(table_name, fields);
+  return await axios({
+    method: "post",
+    url: base + "/add-column/" + table_name,
+    data: fields,
+    headers: {
+      token: token,
+    },
+  }).catch((res) => {
+    if (res.response?.status == 401) {
+      ElNotification({
+        title: "Error",
+        message: "Unauthorized",
+        type: "error",
+      });
+    }
+  });
+};
+
+const setError = async (table_name, params) => {
+  return await axios({
+    method: "put",
+    url: "http://localhost:8888/api/Tables/" + table_name + "/store",
+    data: params,
+    headers: {
+      token: token,
+    },
+  }).catch((res) => {
+    if (res.response.status == 401) {
+      ElNotification({
+        title: "Error",
+        message: "Unauthorized",
+        type: "error",
+      });
+    }
+  });
+};
 
 export default {
   list,
@@ -143,4 +207,6 @@ export default {
   store,
   detail,
   edit,
+  getAuths,
+  addColumn,
 };

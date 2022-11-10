@@ -44,7 +44,7 @@ export default {
           message: "Created",
           type: "success",
         });
-        this.$router.push("/auths/tables-group/list");
+        this.$router.push("/auths/tables-group/tables/list");
       });
     },
   },

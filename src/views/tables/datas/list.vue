@@ -2,9 +2,16 @@
   <div class="d-flex justify-content-between">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item>Users</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/tables/list' }">Tables</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ this.$route.params.table_name }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-button plain size="small" type="info" @click="$router.push('/users/create')">Add</el-button>
+    <el-button
+      plain
+      size="small"
+      type="info"
+      @click="$router.push('/tables/datas/' + this.$route.params.table_name + '/create')"
+      >Add</el-button
+    >
   </div>
 
   <hr />
@@ -17,21 +24,16 @@
           column.name == 'user_id' ||
           column.name == 'status' ||
           column.name == 'added_date' ||
-          column.name == 'updated_date'
+          column.name == 'updated_date' ||
+          column.name == 'table_group_id'
         "
       ></template>
-      <el-table-column v-else-if="column.name == 'image'" :prop="column.name" min-width="90px" width="auto">
+      <el-table-column v-else-if="column.name == 'icon'" :prop="column.name" min-width="50px" width="auto">
         <template #header>
           <label class="fs-6 text-nowrap">{{ column.display }} </label>
         </template>
         <template #default="scope">
-          <template v-if="scope.row[column.name] != null">
-            <el-image :src="$image_base + scope.row[column.name]" lazy fit="cover" style="height: 60px" class="rounded">
-              <template #placeholder>
-                <div class="image-slot">Loading<span class="dot">...</span></div>
-              </template>
-            </el-image>
-          </template>
+          <i class="fs-4" :class="scope.row[column.name]"></i>
         </template>
       </el-table-column>
       <el-table-column v-else :prop="column.name" min-width="250px" width="auto">
@@ -39,31 +41,40 @@
           <label class="fs-6 text-nowrap">{{ column.display }} </label>
         </template>
         <template #default="scope">
-          <el-tag type="warning" v-if="column.key == 'MUL' && scope.row[column.name].data != undefined">
+          <template v-if="column.type == 'file' && scope.row[column.name] != null">
+            <el-image :src="$image_base + scope.row[column.name]" lazy fit="cover" style="height: 60px" class="rounded">
+              <template #placeholder>
+                <div class="image-slot">Loading<span class="dot">...</span></div>
+              </template>
+            </el-image>
+          </template>
+          <el-tag type="warning" v-else-if="column.key == 'MUL' && scope.row[column.name].data != undefined">
             {{ scope.row[column.name].data }}
           </el-tag>
           <label v-else class="fs-6 ellipsis-3">{{ scope.row[column.name] }}</label>
         </template>
       </el-table-column>
     </template>
-    <el-table-column fixed="right" label="Operations" width="98">
+    <el-table-column fixed="right" label="Operations" min-width="118">
       <template #default="scope">
         <div class="d-flex justify-content-center w-100">
           <el-dropdown trigger="click">
             <el-button><i class="bi bi-pencil fs-6"></i></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item
-                  @click="$router.push('/users/detail/' + scope.row.id)"
-                  class="text-decoration-none text-primary"
-                >
-                  Detail
+                <el-dropdown-item>
+                  <router-link
+                    class="text-decoration-none text-primary"
+                    :to="'/tables/datas/' + this.$route.params.table_name + '/detail/' + scope.row.id"
+                    >Detail</router-link
+                  >
                 </el-dropdown-item>
-                <el-dropdown-item
-                  @click="$router.push('/users/edit/' + scope.row.id)"
-                  class="text-decoration-none text-primary"
-                >
-                  Edit
+                <el-dropdown-item>
+                  <router-link
+                    class="text-decoration-none text-success"
+                    :to="'/tables/datas/' + this.$route.params.table_name + '/edit/' + scope.row.id"
+                    >Edit</router-link
+                  >
                 </el-dropdown-item>
                 <el-dropdown-item divided class="text-danger" @click="deleteEvent(scope.row.id)">Delete</el-dropdown-item>
                 <el-divider border-style="dashed" class="my-2" />
@@ -96,7 +107,7 @@ export default {
   },
   methods: {
     getData() {
-      services.list("users").then((res) => {
+      services.list(this.$route.params.table_name).then((res) => {
         this.datas = res.data;
       });
     },
@@ -105,7 +116,7 @@ export default {
         confirmButtonText: "OK",
         callback: (action) => {
           if (action == "confirm") {
-            services.del("users", id).then(() => {
+            services.del(this.$route.params.table_name, id).then(() => {
               ElNotification({
                 title: "Success",
                 message: "Deleted",
