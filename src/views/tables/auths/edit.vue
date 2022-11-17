@@ -1,15 +1,17 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/' }">Auths</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/authority-groups/list' }">Authority Groups</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/authority-groups/auths/' + this.$route.params.auths_id + '/list' }"
-      >Auths</el-breadcrumb-item
+    <el-breadcrumb-item :to="{ path: '/tables/list' }">Tables</el-breadcrumb-item>
+
+    <el-breadcrumb-item :to="{ path: '/tables/auths/' + this.$route.params.table_name + '/list' }"
+      >{{ this.$route.params.table_name }} auths</el-breadcrumb-item
     >
+
     <el-breadcrumb-item>Edit</el-breadcrumb-item>
   </el-breadcrumb>
 
   <hr />
+
   <div v-if="create_active" class="row justify-content-center">
     <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
       <template v-for="column in columns" :key="column">
@@ -58,27 +60,39 @@ export default {
       columns: {},
       data: {},
       table_columns: {},
+      table_name: "",
       create_active: false,
+      create_or_edit: "",
     };
   },
   mounted() {
     this.getData();
   },
-  //NOTE - SON DAKKADA SIÇTI ROUTEDE İKİ TANE İD OLDUĞU İÇİN PATLIYOR O YÜZDEN EDİT SAÇMALIYOR
   methods: {
     getData() {
-      services.getAuths(this.$route.params.id, this.$route.params.auths_id).then((res) => {
+      this.columns = {};
+      this.data = {};
+      this.table_columns = {};
+      services.getAuths(this.$route.params.table_name).then((res) => {
         this.columns = res.data.columns;
         this.table_columns = res.data.table_columns;
         this.create_active = true;
-        let data = res.data.data;
-        for (const [key, val] of Object.entries(data)) {
-          if (key == "list_hide" || key == "get_hide" || key == "create_hide" || key == "edit_hide") {
-            this.data[key] = val.split(",");
+        let data = {};
+        services.edit("auths", this.$route.params.auths_id).then((res) => {
+          data = res.data.data;
+          if (data == null) {
+            this.create_or_edit = "create";
           } else {
-            this.data[key] = val;
+            this.create_or_edit = "edit";
+            for (const [key, val] of Object.entries(data)) {
+              if (key == "list_hide" || key == "get_hide" || key == "create_hide" || key == "edit_hide") {
+                this.data[key] = val.split(",");
+              } else {
+                this.data[key] = val;
+              }
+            }
           }
-        }
+        });
       });
     },
     save() {
@@ -89,13 +103,14 @@ export default {
           this.data[key] = val;
         }
       }
-      services.update("auths", this.data.id, this.data).then(() => {
+
+      services.update("auths", this.$route.params.auths_id, this.data).then(() => {
         ElNotification({
           title: "Success",
-          message: "Updated",
+          message: "Created",
           type: "success",
         });
-        this.$router.push("/auths/authority-groups/auths/" + this.$route.params.id + "/list");
+        this.$router.push("/tables/auths/" + this.$route.params.table_name + "/list");
       });
     },
   },

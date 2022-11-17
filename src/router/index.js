@@ -7,6 +7,11 @@ const routes = [
     component: () => import("@/views/Home.vue"),
   },
   {
+    path: "/market",
+    name: "market",
+    component: () => import("@/views/iyzico/odeme.vue"),
+  },
+  {
     path: "/profile",
     children: [
       {
@@ -177,6 +182,27 @@ const routes = [
           },
         ],
       },
+      {
+        path: "auths/:table_name",
+        children: [
+          {
+            path: "list",
+            component: () => import("@/views/tables/auths/list.vue"),
+          },
+          {
+            path: "create",
+            component: () => import("@/views/tables/auths/create.vue"),
+          },
+          {
+            path: "edit/:auths_id",
+            component: () => import("@/views/tables/auths/edit.vue"),
+          },
+          {
+            path: "detail/:auths_id",
+            component: () => import("@/views/tables/auths/detail.vue"),
+          },
+        ],
+      },
     ],
   },
   {
@@ -197,6 +223,48 @@ const routes = [
       {
         path: "detail/:id",
         component: () => import("@/views/users/detail.vue"),
+      },
+    ],
+  },
+  {
+    path: "/market",
+    children: [
+      {
+        path: "list",
+        component: () => import("@/views/satin-alma/market/list.vue"),
+      },
+      {
+        path: "create",
+        component: () => import("@/views/satin-alma/market/create.vue"),
+      },
+      {
+        path: "edit/:id",
+        component: () => import("@/views/satin-alma/market/edit.vue"),
+      },
+      {
+        path: "detail/:id",
+        component: () => import("@/views/satin-alma/market/detail.vue"),
+      },
+    ],
+  },
+  {
+    path: "/market-islemler",
+    children: [
+      {
+        path: "list",
+        component: () => import("@/views/satin-alma/islemler/list.vue"),
+      },
+      {
+        path: "create",
+        component: () => import("@/views/satin-alma/islemler/create.vue"),
+      },
+      {
+        path: "edit/:id",
+        component: () => import("@/views/satin-alma/islemler/edit.vue"),
+      },
+      {
+        path: "detail/:id",
+        component: () => import("@/views/satin-alma/islemler/detail.vue"),
       },
     ],
   },

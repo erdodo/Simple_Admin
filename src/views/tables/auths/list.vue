@@ -3,12 +3,13 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/tables/list' }">Tables</el-breadcrumb-item>
+
       <el-breadcrumb-item>{{ this.$route.params.table_name }} auths</el-breadcrumb-item>
     </el-breadcrumb>
     <el-button
       plain
-      type="info"
       size="small"
+      type="info"
       @click="$router.push('/tables/auths/' + this.$route.params.table_name + '/create')"
       >Add</el-button
     >
@@ -27,19 +28,41 @@
           column.name == 'updated_date'
         "
       ></template>
+      <el-table-column
+        v-else-if="
+          column.name == 'list_hide' ||
+          column.name == 'get_hide' ||
+          column.name == 'create_hide' ||
+          column.name == 'edit_hide'
+        "
+        :prop="column.name"
+        min-width="250px"
+        width="auto"
+      >
+        <template #header>
+          <label class="fs-6 text-nowrap">{{ column.display }} </label>
+        </template>
+        <template #default="scope">
+          <el-tag type="info" class="m-1" v-for="clm in scope.row[column.name].split(',')" :key="clm">
+            {{ clm }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column v-else-if="column.type == 'tinyint'" min-width="100px">
+        <template #header>
+          <label class="fs-6 text-nowrap" v-tooltip="column.display">{{ column.display }} </label>
+        </template>
+        <template #default="scope">
+          <el-tag type="success" v-if="scope.row[column.name] == 1"> Aktif </el-tag>
+          <el-tag v-else type="danger">Pasif</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column v-else :prop="column.name" min-width="250px" width="auto">
         <template #header>
           <label class="fs-6 text-nowrap">{{ column.display }} </label>
         </template>
         <template #default="scope">
-          <template v-if="column.type == 'file' && scope.row[column.name] != null">
-            <el-image :src="$image_base + scope.row[column.name]" lazy fit="cover" style="height: 60px" class="rounded">
-              <template #placeholder>
-                <div class="image-slot">Loading<span class="dot">...</span></div>
-              </template>
-            </el-image>
-          </template>
-          <el-tag type="warning" v-else-if="column.key == 'MUL' && scope.row[column.name].data != undefined">
+          <el-tag type="warning" v-if="column.key == 'MUL' && scope.row[column.name].data != undefined">
             {{ scope.row[column.name].data }}
           </el-tag>
           <label v-else class="fs-6 ellipsis-3">{{ scope.row[column.name] }}</label>
@@ -53,19 +76,17 @@
             <el-button><i class="bi bi-pencil fs-6"></i></el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>
-                  <router-link
-                    class="text-decoration-none text-primary"
-                    :to="'/auths/authority-groups/auths/' + this.$route.params.auths_id + '/detail/' + scope.row.table_name"
-                    >Detail</router-link
-                  >
+                <el-dropdown-item
+                  @click="$router.push('/tables/auths/' + this.$route.params.table_name + '/detail/' + scope.row.id)"
+                  class="text-decoration-none text-primary"
+                >
+                  Detail
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <router-link
-                    class="text-decoration-none text-success"
-                    :to="'/auths/authority-groups/auths/' + this.$route.params.auths_id + '/edit/' + scope.row.table_name"
-                    >Edit</router-link
-                  >
+                <el-dropdown-item
+                  @click="$router.push('/tables/auths/' + this.$route.params.table_name + '/edit/' + scope.row.id)"
+                  class="text-decoration-none text-primary"
+                >
+                  Edit
                 </el-dropdown-item>
                 <el-dropdown-item divided class="text-danger" @click="deleteEvent(scope.row.id)">Delete</el-dropdown-item>
 
@@ -101,7 +122,7 @@ export default {
     getData() {
       const params = {
         filter: {
-          auths_group_id: this.$route.params.auths_id,
+          table_name: this.$route.params.table_name,
         },
       };
       services.list("auths", params).then((res) => {

@@ -9,6 +9,14 @@
         <el-menu-item index="/users/list"><i class="bi bi-list-ol me-2"></i>List</el-menu-item>
         <el-menu-item index="/users/create"><i class="bi bi-plus me-2"></i>Create</el-menu-item>
       </el-sub-menu>
+      <el-sub-menu index="/market">
+        <template #title>
+          <div class="text-start"><i class="bi bi-shop fs-4 me-2"></i> Satın Alma</div>
+        </template>
+
+        <el-menu-item index="/market/list"><i class="bi bi-box-seam me-2"></i>Ürünler</el-menu-item>
+        <el-menu-item index="/market-islemler/list"><i class="bi bi-file-ruled me-2"></i>Market İşlemler</el-menu-item>
+      </el-sub-menu>
       <!--todo Tablolar  listelenecek -->
       <el-sub-menu index="/tables">
         <template #title>

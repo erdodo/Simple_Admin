@@ -39,9 +39,7 @@
         </div>
         <Inputs v-else :column="column" v-model="data[column.name]"></Inputs>
       </template>
-    </div>
-    <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-end my-3">
         <el-button type="primary" plain @click="save()">Save</el-button>
       </div>
     </div>
@@ -67,18 +65,20 @@ export default {
   //NOTE - SON DAKKADA SIÇTI ROUTEDE İKİ TANE İD OLDUĞU İÇİN PATLIYOR O YÜZDEN EDİT SAÇMALIYOR
   methods: {
     getData() {
-      services.getAuths(this.$route.params.id, this.$route.params.auths_id).then((res) => {
-        this.columns = res.data.columns;
-        this.table_columns = res.data.table_columns;
-        this.create_active = true;
-        let data = res.data.data;
-        for (const [key, val] of Object.entries(data)) {
-          if (key == "list_hide" || key == "get_hide" || key == "create_hide" || key == "edit_hide") {
-            this.data[key] = val.split(",");
-          } else {
-            this.data[key] = val;
+      services.edit("auths", this.$route.params.id).then((res) => {
+        services.getAuths(res.data.data.table_name, this.$route.params.auths_id).then((res) => {
+          this.columns = res.data.columns;
+          this.table_columns = res.data.table_columns;
+          this.create_active = true;
+          let data = res.data.data;
+          for (const [key, val] of Object.entries(data)) {
+            if (key == "list_hide" || key == "get_hide" || key == "create_hide" || key == "edit_hide") {
+              this.data[key] = val.split(",");
+            } else {
+              this.data[key] = val;
+            }
           }
-        }
+        });
       });
     },
     save() {
@@ -89,13 +89,13 @@ export default {
           this.data[key] = val;
         }
       }
-      services.update("auths", this.data.id, this.data).then(() => {
+      services.update("auths", this.$route.params.id, this.data).then(() => {
         ElNotification({
           title: "Success",
           message: "Updated",
           type: "success",
         });
-        this.$router.push("/auths/authority-groups/auths/" + this.$route.params.id + "/list");
+        this.$router.push("/auths/authority-groups/auths/" + this.$route.params.auths_id + "/list");
       });
     },
   },

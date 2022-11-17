@@ -27,6 +27,28 @@
         </template>
       </el-table-column>
     </template>
+    <el-table-column fixed="right" label="Operations" min-width="118">
+      <template #default="scope">
+        <div class="d-flex justify-content-center w-100">
+          <!--Baş:KALEM-->
+          <el-dropdown trigger="click">
+            <el-button><i class="bi bi-pencil fs-6"></i></el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  @click="$router.push('/tables/columns/' + this.$route.params.table_name + '/edit/' + scope.row.name)"
+                  class="text-decoration-none text-primary"
+                >
+                  Edit
+                </el-dropdown-item>
+                <el-dropdown-item divided class="text-danger" @click="deleteEvent(scope.row.id)">Delete</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <!--Son:KALEM-->
+        </div>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 

@@ -1,20 +1,17 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/' }">Auths</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/authority-groups/list' }">Authority Groups</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/auths/authority-groups/auths/' + this.$route.params.auths_id + '/list' }"
-      >Auths</el-breadcrumb-item
+    <el-breadcrumb-item :to="{ path: '/tables/list' }">Tables</el-breadcrumb-item>
+
+    <el-breadcrumb-item :to="{ path: '/tables/auths/' + this.$route.params.table_name + '/list' }"
+      >{{ this.$route.params.table_name }} auths</el-breadcrumb-item
     >
+
     <el-breadcrumb-item>Create</el-breadcrumb-item>
   </el-breadcrumb>
 
   <hr />
-  <div class="d-flex align-items-center">
-    <label class="m-0 me-2 text-nowrap">Table Name:</label>
-    <el-input v-model="table_name" placeholder="Table Name" class="mx-3" size="" @keypress.enter="getData"></el-input>
-    <el-button type="primary" @click="getData()">Get Create Data</el-button>
-  </div>
+
   <div v-if="create_active" class="row justify-content-center">
     <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 mb-3">
       <template v-for="column in columns" :key="column">
@@ -69,30 +66,18 @@ export default {
     };
   },
   mounted() {
-    //this.getData();
+    this.getData();
   },
   methods: {
     getData() {
       this.columns = {};
       this.data = {};
       this.table_columns = {};
-      services.getAuths(this.table_name, this.$route.params.auths_id).then((res) => {
+      services.getAuths(this.$route.params.table_name, this.$route.params.auths_id).then((res) => {
         this.columns = res.data.columns;
         this.table_columns = res.data.table_columns;
         this.create_active = true;
-        let data = res.data.data;
-        if (data == null) {
-          this.create_or_edit = "create";
-        } else {
-          this.create_or_edit = "edit";
-          for (const [key, val] of Object.entries(data)) {
-            if (key == "list_hide" || key == "get_hide" || key == "create_hide" || key == "edit_hide") {
-              this.data[key] = val.split(",");
-            } else {
-              this.data[key] = val;
-            }
-          }
-        }
+        this.data["table_name"] = this.$route.params.table_name;
       });
     },
     save() {
@@ -103,25 +88,15 @@ export default {
           this.data[key] = val;
         }
       }
-      if (this.create_or_edit == "create") {
-        services.store("auths", this.data).then(() => {
-          ElNotification({
-            title: "Success",
-            message: "Created",
-            type: "success",
-          });
-          this.$router.push("/auths/authority-groups/auths/" + this.$route.params.auths_id + "/list");
+
+      services.store("auths", this.data).then(() => {
+        ElNotification({
+          title: "Success",
+          message: "Created",
+          type: "success",
         });
-      } else {
-        services.update("auths", this.data.id, this.data).then(() => {
-          ElNotification({
-            title: "Success",
-            message: "Created",
-            type: "success",
-          });
-          this.$router.push("/auths/authority-groups/auths/" + this.$route.params.auths_id + "/list");
-        });
-      }
+        this.$router.push("/tables/auths/" + this.$route.params.table_name + "/list");
+      });
     },
   },
   components: {

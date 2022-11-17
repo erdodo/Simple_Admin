@@ -50,7 +50,7 @@
                 <el-dropdown-item @click="$router.push('/tables/columns/' + scope.row.name + '/list')"
                   >Columns</el-dropdown-item
                 >
-                <el-dropdown-item>Auths</el-dropdown-item>
+                <el-dropdown-item @click="$router.push('/tables/auths/' + scope.row.name + '/list')">Auths</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
